@@ -1,0 +1,51 @@
+{
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/serverless-authentication-boilerplate-0.6.3.tgz_1463872329171_0.7904518879950047"
+  },
+  "author": {
+    "email": "eetu.tuomala@sc5.io",
+    "name": "Eetu Tuomala"
+  },
+  "bugs": {
+    "url": "https://github.com/laardee/serverless-authentication-boilerplate/issues"
+  },
+  "dependencies": {
+    "serverless-client-s3": "^2.0.0",
+    "serverless-cors-plugin": "^0.4.1"
+  },
+  "description": "Boilerplate for Serverless Authentication",
+  "devDependencies": {
+    "async": "^2.0.0-rc.3",
+    "aws-sdk": "^2.2.48",
+    "chai": "^3.5.0",
+    "dirty-chai": "^1.2.2",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "^0.6.2",
+    "eslint-plugin-react": "^4.3.0",
+    "mocha": "^2.4.5",
+    "nock": "^7.7.2",
+    "serverless-authentication": "^0.4.4"
+  },
+  "homepage": "https://github.com/laardee/serverless-authentication-boilerplate#readme",
+  "keywords": [
+    "aws",
+    "lambda",
+    "oauth",
+    "serverless"
+  ],
+  "license": "MIT",
+  "name": "memebuster",
+  "optionalDependencies": {},
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laardee/serverless-authentication-boilerplate.git"
+  },
+  "scripts": {
+    "install": "cd authentication && npm install && cd ../authorization && npm install",
+    "lint": "eslint . || true"
+  },
+  "version": "0.6.3"
+}

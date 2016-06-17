@@ -1,0 +1,13 @@
+{
+  "name": "memebuster",
+  "custom": {},
+  "plugins": [
+    "serverless-cors-plugin",
+    "serverless-client-s3"
+  ],
+  "custom" : {
+    "client": {
+      "bucketName": "${stage}.memebuster.lol"
+    }
+  }
+}
