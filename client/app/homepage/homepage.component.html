@@ -1,0 +1,6 @@
+<div>HOME
+
+<a *ngIf="!loginService.isLoggedIn" [routerLink]="['Login']" >Login</a>
+<a *ngIf="loginService.isLoggedIn" >Logout</a>
+
+</div>

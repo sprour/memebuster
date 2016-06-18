@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Serverless Authentication</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="app.css">
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body>
+<div class="main">
+  <h1>Serverless Authentication</h1>
+  <p>This is a frontend demonstration how <a href="https://www.npmjs.com/package/serverless-authentication-boilerplate" target="_blank">Serverless Authentication boilerplate</a> works.</p>
+  <p>Same version of boilerplate is used in this demo, it only authenticates, no personal data is saved to db.</p>
+  <h2>Providers</h2>
+  <div class="providers">
+    <button id="facebook"><div class="logo"></div><div class="text">Log In</div></button>
+    <button id="google"><div class="logo"></div><div class="text">Sign In</div></button>
+    <button id="custom-google">custom-google</button>
+  </div>
+  <div class="logout">
+    <button id="logout">Logout</button>
+  </div>
+  <h2>Response</h2>
+  <div id="token" class="response"></div>
+  <h2>Test</h2>
+  <p>Authorization token is valid for a 15 seconds, if auto refresh is checked, refresh token is used to request new authorization token</p>
+  <div class="testers">
+    <button id="test">Test token</button>
+    <button id="refresh">Refresh token</button>
+    <input type="checkbox" id="auto-refresh" checked="checked">Auto refresh token
+  </div>
+  <div id="test-result" class="response"></div>
+  <p>See also <a href="http://www.serverless.com">serverless.com</a></p>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75215422-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
