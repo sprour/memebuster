@@ -1,5 +1,6 @@
 'use strict';
 
+
 // Config
 const slsAuth = require('serverless-authentication');
 const config = slsAuth.config;
@@ -14,6 +15,7 @@ const customGoogle = require('./custom-google');
 // Common
 const crypto = require('crypto');
 const cache = require('./cache');
+const profile_db = require('./profile');
 const async = require('async');
 
 const helpers = require('./helpers');
@@ -38,6 +40,8 @@ function callbackHandler(event, callback) {
    * @param error
    */
   function errorResponse(error) {
+    console.log("errorResponse");
+    console.log(error);
     utils.errorResponse(
       error,
       providerConfig,
@@ -50,6 +54,8 @@ function callbackHandler(event, callback) {
    * @param data
    */
   function tokenResponse(data) {
+    console.log("tokenResponse");
+    console.log(data);
     utils.tokenResponse(
       data,
       providerConfig,
@@ -70,6 +76,7 @@ function callbackHandler(event, callback) {
     } else {
       cache.revokeState(state, (stateError) => {
         if (stateError) {
+          console.log("stateError");
           // Error response if state saving fail or state is not valid
           errorResponse({ error: stateError });
         } else {
@@ -84,7 +91,15 @@ function callbackHandler(event, callback) {
               // Here you can save the profile to DynamoDB if it doesn't already exist
               // In this example it just makes empty callback to continue and nothing is saved.
               // profile class: https://github.com/laardee/serverless-authentication/blob/master/src/profile.js
-              _callback(null);
+              console.log("profile:", profile);
+
+              profile_db.createProfile(id,
+                                       profile.email,
+                                       profile.name,
+                                       profile.picture,
+                                       profile.provider,
+                                       _callback);
+
             }
           }, (saveError, results) => {
             if (!saveError) {

@@ -3,6 +3,7 @@ import {LoginComponent} from './login/login.component';
 import {RouteConfig, RouteParams, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {LoginService} from "./login/login.service";
 import {HomepageComponent} from "./homepage/homepage.component";
+import {LogoutComponent} from "./login/logout.component";
 
 
 
@@ -14,8 +15,13 @@ import {HomepageComponent} from "./homepage/homepage.component";
   },
   {
     path: '/',
-    name: 'Homepage',
+    name: 'Default',
     component: HomepageComponent
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: LogoutComponent
   }
 
 ])
@@ -23,14 +29,14 @@ import {HomepageComponent} from "./homepage/homepage.component";
 
 @Component({
     selector: 'meme-app',
-    template: '{{token}}<router-outlet></router-outlet>',
+    template: '<router-outlet></router-outlet>',
     providers: [ROUTER_PROVIDERS, LoginService],
     directives: [ROUTER_DIRECTIVES]
 })
 export class AppComponent {
-  public token:string = "x";
+  public token:string = "";
   constructor(){
-   
+
   }
 
 }

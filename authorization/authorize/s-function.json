@@ -6,14 +6,27 @@
   "customRole": false,
   "handler": "authorize/handler.handler",
   "timeout": 60,
-  "memorySize": 512,
+  "memorySize": 128,
   "authorizer": {
     "type": "TOKEN",
     "identitySource": "method.request.header.Authorization",
     "authorizerResultTtlInSeconds": "0"
   },
   "custom": {
-    "excludePatterns": []
+    "excludePatterns": [],
+    "optimize": {
+      "exclude": ["aws-sdk"],
+      "transforms": [
+        {
+          "name": "babelify",
+          "opts": {
+            "presets": [
+              "es2015"
+            ]
+          }
+        }
+      ]
+    }
   },
   "endpoints": [],
   "events": [],

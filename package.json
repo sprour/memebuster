@@ -1,18 +1,15 @@
 {
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/serverless-authentication-boilerplate-0.6.3.tgz_1463872329171_0.7904518879950047"
-  },
+  "private": false,
   "author": {
-    "email": "eetu.tuomala@sc5.io",
-    "name": "Eetu Tuomala"
-  },
-  "bugs": {
-    "url": "https://github.com/laardee/serverless-authentication-boilerplate/issues"
+    "email": "marc.hughes+npm@gmail.com",
+    "name": "Marc Hughes"
   },
   "dependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babelify": "^7.3.0",
     "serverless-client-s3": "^2.0.0",
-    "serverless-cors-plugin": "^0.4.1"
+    "serverless-cors-plugin": "^0.4.1",
+    "serverless-optimizer-plugin": "^2.5.1"
   },
   "description": "Boilerplate for Serverless Authentication",
   "devDependencies": {
@@ -28,7 +25,7 @@
     "nock": "^7.7.2",
     "serverless-authentication": "^0.4.4"
   },
-  "homepage": "https://github.com/laardee/serverless-authentication-boilerplate#readme",
+  "homepage": "http://www.memebuster.lol/",
   "keywords": [
     "aws",
     "lambda",
@@ -38,7 +35,6 @@
   "license": "MIT",
   "name": "memebuster",
   "optionalDependencies": {},
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/laardee/serverless-authentication-boilerplate.git"

@@ -6,11 +6,8 @@
   "customRole": false,
   "handler": "callback/handler.handler",
   "timeout": 60,
-  "memorySize": 512,
+  "memorySize": 128,
   "authorizer": {},
-  "custom": {
-    "excludePatterns": []
-  },
   "endpoints": [
     {
       "path": "authentication/callback/{provider}",
@@ -66,6 +63,20 @@
     "cors": {
       "allowOrigin": "*",
       "allowHeaders": ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key"]
+    },
+    "excludePatterns": [],
+    "optimize": {
+      "exclude": ["aws-sdk"],
+      "transforms": [
+        {
+          "name": "babelify",
+          "opts": {
+            "presets": [
+              "es2015"
+            ]
+          }
+        }
+      ]
     }
   }
 }

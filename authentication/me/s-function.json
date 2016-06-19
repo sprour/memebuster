@@ -1,58 +1,51 @@
 {
-  "name": "signin",
+  "name": "me",
   "runtime": "nodejs4.3",
-  "description": "${project} - ${stage}: signin",
+  "description": "${project} - ${stage}: me",
   "customName": false,
   "customRole": false,
-  "handler": "signin/handler.handler",
-  "timeout": 60,
+  "handler": "me/handler.handler",
+  "timeout": 120,
   "memorySize": 128,
   "authorizer": {},
   "custom": {
-    "excludePatterns": [],
-    "optimize": {
-      "exclude": ["aws-sdk"],
-      "transforms": [
-        {
-          "name": "babelify",
-          "opts": {
-            "presets": [
-              "es2015"
-            ]
-          }
-        }
-      ]
-    }
+    "excludePatterns": []
   },
   "endpoints": [
     {
-      "path": "authentication/signin/{provider}",
+      "path": "authentication/me",
       "method": "GET",
       "type": "AWS",
-      "authorizationType": "none",
-      "authorizerFunction": false,
+      "authorizationType": "CUSTOM",
+      "authorizerFunction": "authorize",
       "apiKeyRequired": false,
       "requestParameters": {
-        "integration.request.path.provider": "method.request.path.provider"
       },
-      "requestTemplates": {
-        "application/json": "{\"provider\":\"$input.params('provider')\",\"host\":\"$input.params().header.get('host')\",\"stage\":\"$context.stage\"}"
-      },
+      "requestTemplates": "$${apiPrincipalIdMapRequestTemplate}",
       "responses": {
         "400": {
           "statusCode": "400"
         },
         "default": {
-          "statusCode": "302",
-          "responseParameters": {
-            "method.response.header.Location": "integration.response.body.url"
-          },
+          "statusCode": "200",
+          "responseParameters": {},
           "responseModels": {},
           "responseTemplates": {
             "application/json": ""
           }
         }
       }
+    },
+    {
+      "path": "authentication/me",
+      "method": "OPTIONS",
+      "type": "MOCK",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${apiCorsRequestTemplate}",
+      "responses": "$${apiCorsOptionsResponse}"
     }
   ],
   "events": [],
@@ -74,5 +67,24 @@
   "vpc": {
     "securityGroupIds": [],
     "subnetIds": []
+  },
+  "custom": {
+    "cors": {
+      "allowOrigin": "*",
+      "allowHeaders": ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key"]
+    },
+    "optimize": {
+      "exclude": ["aws-sdk"],
+      "transforms": [
+        {
+          "name": "babelify",
+          "opts": {
+            "presets": [
+              "es2015"
+            ]
+          }
+        }
+      ]
+    }
   }
 }

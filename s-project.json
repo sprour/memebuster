@@ -3,7 +3,8 @@
   "custom": {},
   "plugins": [
     "serverless-cors-plugin",
-    "serverless-client-s3"
+    "serverless-client-s3",
+    "serverless-optimizer-plugin"
   ],
   "custom" : {
     "client": {

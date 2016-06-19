@@ -3,5 +3,6 @@
 exports = module.exports = {
   signinHandler: require('./signinHandler'),
   callbackHandler: require('./callbackHandler'),
-  refreshHandler: require('./refreshHandler')
+  refreshHandler: require('./refreshHandler'),
+  meHandler: require('./meHandler')
 };

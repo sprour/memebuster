@@ -14,19 +14,34 @@ export class LoginService {
   public isLoggedIn:boolean=false;
 
   constructor(private http: Http) {
-
+    this.loadTokens();
+    if(this.refreshToken) {
+      this.refreshAuthToken();
+    }
   }
 
   // refreshToken() {
   //   // endpoint + '/authentication/refresh/' + localStorage.getItem('refresh_token');
   // }
 
+  refreshAuthToken() {
+    let url = `${this.endpoint}/authentication/refresh/${this.refreshToken}`
+
+    console.log(`Refreshing token ${url}`);
+    return this.http.get(url).subscribe(this.onRefreshToken);
+  }
+
+  private onRefreshToken = (response:Response) => {
+    let body = response.json();
+    this.setTokens(body.authorization_token, body.refresh_token);
+  }
+
   getUserInfo() {
-    let url = this.endpoint + '/test-token';
+    let url = this.endpoint + '/authentication/me';
     let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authToken});
     let options = new RequestOptions({ headers: headers });
-    console.log("Getting " + url);
-    return this.http.get(url, options).map(this.extractData).catch(this.handleError).subscribe((a)=>console.log(a););
+    console.log(`Getting ${url} with token ${this.authToken}`);
+    return this.http.get(url, options).map(this.extractData).catch(this.handleError).subscribe((a)=>console.log(a));
   }
 
   private handleError (error: any) {
@@ -44,10 +59,28 @@ export class LoginService {
     return body.data || { };
   }
 
+  private loadTokens() {
+    this.authToken = localStorage.getItem('login.authToken');
+    this.refreshToken = localStorage.getItem('login.refreshToken');
+  }
+  private saveTokens() {
+    localStorage.setItem('login.authToken', this.authToken);
+    localStorage.setItem('login.refreshToken', this.refreshToken);
+  }
+  private clearTokens() {
+    localStorage.removeItem('login.authToken');
+    localStorage.removeItem('login.refreshToken');
+  }
+
   setTokens(auth:string, refresh:string) {
+    if(auth == this.authToken){
+      // Just a page reload or something where the params were sticking around
+      return;
+    }
     this.authToken = auth;
     this.refreshToken = refresh;
     this.isLoggedIn = true;
+    this.saveTokens();
     this.getUserInfo();
   }
 
@@ -60,8 +93,8 @@ export class LoginService {
   }
 
   logout() {
-    localStorage.removeItem('authorization_token');
-    localStorage.removeItem('refresh_token');
+    this.clearTokens();
+    console.log('Logged Out');
   }
 
   private providerRedirect(provider:string) {

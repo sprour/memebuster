@@ -46,6 +46,8 @@
                 "dynamodb:Scan",
                 "dynamodb:Query",
                 "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:UpdateItem",
                 "dynamodb:DeleteItem"
               ],
               "Resource": "arn:aws:dynamodb:${region}:*:*"
@@ -87,6 +89,28 @@
           "WriteCapacityUnits": 1
         },
         "TableName": "${stage}-${project}-cache"
+      }
+    },
+    "DynamoProfile": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "uid",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "uid",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        },
+        "TableName": "${stage}-${project}-profile"
       }
     }
   },

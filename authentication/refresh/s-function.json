@@ -6,10 +6,23 @@
   "customRole": false,
   "handler": "refresh/handler.handler",
   "timeout": 60,
-  "memorySize": 512,
+  "memorySize": 128,
   "authorizer": {},
   "custom": {
-    "excludePatterns": []
+    "excludePatterns": [],
+    "optimize": {
+      "exclude": ["aws-sdk"],
+      "transforms": [
+        {
+          "name": "babelify",
+          "opts": {
+            "presets": [
+              "es2015"
+            ]
+          }
+        }
+      ]
+    }
   },
   "endpoints": [
     {
