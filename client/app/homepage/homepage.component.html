@@ -1,7 +1,69 @@
-<div>HOME
+<div>
+  <h1>HOMEPAGE</h1>
 
-<a *ngIf="!loginService.isLoggedIn" [routerLink]="['Login']" >Login</a>
-<a *ngIf="loginService.isLoggedIn" [routerLink]="['Logout']">Logout</a>
-<a (click)="loginService.getUserInfo()">Check User Info</a>
+  <a *ngIf="!loginService.isLoggedIn" [routerLink]="['Login']" >Login</a>
+
+  <div *ngIf="loginService.isLoggedIn">
+    <a [routerLink]="['Logout']">Logout</a> <br/>
+
+    <div *ngIf="loaded">
+      <div>
+        <h2>Profile Info:</h2>
+        uid: {{loginService.currentUser.uid}}<br/>
+        Name: {{loginService.currentUser.name}}<br/>
+        Email: {{loginService.currentUser.email}}<br/>
+        Picture: <img src="{{loginService.currentUser.picture}}" /><br/>
+      </div>
+
+      <hr/>
+
+      <div>
+        <h2>Sample Operations:</h2>
+        <h3>Create Car</h3>
+        <form (ngSubmit)="onCreateEntry()" #createForm="ngForm">
+          Make: <input type="text"
+                       [(ngModel)]="creationCarModel.make"
+                       required
+                       ngControl="make"/>
+          <br/>
+
+          Year: <input type="number"
+                      [(ngModel)]="creationCarModel.year"
+                      required
+                      pattern="[1-2][0-9]{3}"
+                      ngControl="year"/>
+          <br/>
+
+          Mileage: <input type="number"
+                       [(ngModel)]="creationCarModel.mileage"
+                       required
+                       pattern="[1-9][0-9]{1,7}"
+                       ngControl="mileage"/>
+          <br/>
+
+
+          <button type="submit"
+                  [disabled]="!createForm.form.valid"
+                  class="btn btn-default">Create Car</button>
+        </form>
+
+        <h3>List Cars</h3>
+        <table>
+          <tbody>
+            <tr *ngFor="let car of cars">
+              <td>{{car.make}}</td>
+              <td>{{car.year}}</td>
+              <td>{{car.mileage}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+      </div>
+
+    </div>
+
+
+  </div>
 
 </div>

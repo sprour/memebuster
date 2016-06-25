@@ -1,0 +1,25 @@
+{
+  "tableName": "${SERVERLESS_STAGE}-${SERVERLESS_PROJECT}-car",
+  "keyName": "id",
+  "entries":[
+    {"id":"test-car-1", "make":"Subaru Forrester", "mileage":32000, "year":2010},
+    {
+      "id":"test-car-2",
+      "make":"Audi TT",
+      "mileage":132000,
+      "year":2004,
+      "previous_owner": {
+        "name": "Marc",
+        "comments": [
+          "Was fun to drive.",
+          "Never in an accident"
+        ]
+      }
+
+    },
+    {"id":"test-car-3", "make":"Ford Mustang", "mileage":57021, "year":2016},
+    {"id":"test-car-4", "make":"Delorean", "mileage":2000000, "year":1986},
+    {"id":"test-car-5", "make":"Intentionally Missing Mileage", "year":2010},
+    {"id":"test-car-${SERVERLESS_STAGE}", "make":"Intentionally Missing Mileage", "year":2010}
+  ]
+}

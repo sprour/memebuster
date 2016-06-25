@@ -13,7 +13,7 @@ function authorize(event, callback) {
   if (event.authorizationToken) {
     try {
       const providerConfig = config(event);
-      const data = utils.readToken(event.authorizationToken, providerConfig.token_secret, {ignoreExpiration:true});
+      const data = utils.readToken(event.authorizationToken, providerConfig.token_secret);
       console.log("data", data);
       policy = utils.generatePolicy(data.id, 'Allow', event.methodArn);
     } catch (err) {

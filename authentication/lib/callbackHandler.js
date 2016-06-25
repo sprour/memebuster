@@ -93,6 +93,7 @@ function callbackHandler(event, callback) {
               // profile class: https://github.com/laardee/serverless-authentication/blob/master/src/profile.js
               console.log("profile:", profile);
 
+              // createProfile creates or updates, safe to do either way.
               profile_db.createProfile(id,
                                        profile.email,
                                        profile.name,

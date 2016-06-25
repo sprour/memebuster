@@ -1,0 +1,9 @@
+{
+  "name": "serverless-authentication-module",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "uuid": "^2.0.2"
+  }
+}

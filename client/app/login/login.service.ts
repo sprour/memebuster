@@ -7,11 +7,19 @@ import '../rxjs-operators.js';
 export class LoginService {
 
   private endpoint:string = 'https://kwhb9xyg8h.execute-api.us-east-1.amazonaws.com/dev';
+  //private endpoint:string = 'http://localhost:3001';
 
   private authToken:string;
   private refreshToken:string;
 
   public isLoggedIn:boolean=false;
+
+  public currentUser = {
+    username: '',
+    name: '',
+    email: '',
+    picture: ''
+  }
 
   constructor(private http: Http) {
     this.loadTokens();
@@ -20,9 +28,6 @@ export class LoginService {
     }
   }
 
-  // refreshToken() {
-  //   // endpoint + '/authentication/refresh/' + localStorage.getItem('refresh_token');
-  // }
 
   refreshAuthToken() {
     let url = `${this.endpoint}/authentication/refresh/${this.refreshToken}`
@@ -36,12 +41,12 @@ export class LoginService {
     this.setTokens(body.authorization_token, body.refresh_token);
   }
 
-  getUserInfo() {
+  public getUserInfo():Observable<Response> {
     let url = this.endpoint + '/authentication/me';
     let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authToken});
     let options = new RequestOptions({ headers: headers });
     console.log(`Getting ${url} with token ${this.authToken}`);
-    return this.http.get(url, options).map(this.extractData).catch(this.handleError).subscribe((a)=>console.log(a));
+    return this.http.get(url, options).map(this.extractData).catch(this.handleError);
   }
 
   private handleError (error: any) {
@@ -53,15 +58,17 @@ export class LoginService {
     return Observable.throw(errMsg);
   }
 
-  private extractData(res: Response) {
+  private extractData = (res: Response) => {
     let body = res.json();
-    console.log("login info: " + body);
+    console.log("login info: ", body);
+    this.currentUser = body;
     return body.data || { };
   }
 
   private loadTokens() {
     this.authToken = localStorage.getItem('login.authToken');
     this.refreshToken = localStorage.getItem('login.refreshToken');
+    if(this.authToken) {this.isLoggedIn = true;}
   }
   private saveTokens() {
     localStorage.setItem('login.authToken', this.authToken);
@@ -81,7 +88,6 @@ export class LoginService {
     this.refreshToken = refresh;
     this.isLoggedIn = true;
     this.saveTokens();
-    this.getUserInfo();
   }
 
   googleLoginRedirect() {

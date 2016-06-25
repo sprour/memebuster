@@ -1,3 +1,33 @@
+# Full website boilerplate
+
+Serverless + Serverless Authentication + Angular 2 Boilerplate
+
+This should get you up and running with a new website easily.  I'm developing this while learning and it may not
+always follow best practices, don't trust me.
+
+# Features
+
+Login via Facebook or Google
+Saves a simple user profile from your login provider in DynamoDb
+Sample REST methods to show how to manipulate a DynamoDb table
+
+# Serverless Plugins
+
+I've included the following plugins
+
+* serverless-cors-plugin - Adds CORS headers to your API calls so you can use the default endpoint URL's with your nice friendly website URL 
+* serverless-client-s3 - Deploys the client folder to an amazon S3 bucket
+* serverless-optimizer-plugin - Reduces the size of your lambda functions for faster deploys and startup times
+
+
+# Original Docs
+
+This project is the conglomeration of a couple other projects.
+
+The base client app docs are in client/Readme.md
+
+The base serverless app docs follow:
+
 # Serverless Authentication
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
 

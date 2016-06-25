@@ -1,13 +1,13 @@
 'use strict';
 
 function createResponseData(id) {
-  // sets 15 seconds expiration time as an example
+  // 1 week expiration
   const authorizationToken = {
     payload: {
       id
     },
     options: {
-      expiresIn: 15
+      expiresIn: 7 * 24 * 60 * 60
     }
   };
 
