@@ -3,11 +3,13 @@
 Serverless + Serverless Authentication + Angular 2 Boilerplate
 
 This should get you up and running with a new website easily.  I'm developing this while learning and it may not
-always follow best practices, don't trust me.
+always follow best practices, **don't trust me**.
+
+I'd be happy to hear about ways of improving this, drop me an email or open an issue.
 
 # Features
 
-Login via Facebook or Google
+Login via Facebook or Google (you could set up MS too)
 Saves a simple user profile from your login provider in DynamoDb
 Sample REST methods to show how to manipulate a DynamoDb table
 
@@ -18,6 +20,84 @@ I've included the following plugins
 * serverless-cors-plugin - Adds CORS headers to your API calls so you can use the default endpoint URL's with your nice friendly website URL 
 * serverless-client-s3 - Deploys the client folder to an amazon S3 bucket
 * serverless-optimizer-plugin - Reduces the size of your lambda functions for faster deploys and startup times
+* serverless-mocha-plugin - Run mocha tests on your functions
+* serverless-dynamodb-fixtures-plugin - Load static data into your dynamodb for testing
+
+# Setup
+
+Deploy your resources (like DB tables)
+
+> sls resources deploy
+
+Load up some sample data:
+
+> sls dynamodb load
+
+This loads the data in the fixtures/ folder into you dynamodb tables using [serverless-dynamodb-fixtures-plugin](https://github.com/marc-hughes/serverless-dynamodb-fixtures-plugin)
+
+
+# Some hints on how to develop
+
+This project has been a learning experience for me while I learn how to best develop serverless apps.  Here's a few things I've learned.
+
+## The backend...
+
+Most of the time while working on the backend, I develop locally and run the functions via mocha inside 
+Webstorm so I can get an interactive debugger.  [Here is how I set that up](readme-images/debugconfig.png)
+
+See cars/test/*.js for the actual tests that get run.  Those are initially generated with something like:
+
+> sls function mocha-create readCar
+
+But I find I have to modify some paths inside the generated code to get the tests to work right.
+
+
+You can run one from the cli like so:
+
+> sls function mocha-run readCar
+
+Run that from the cars/ folder and you should see something like so:
+
+
+````
+  readCar
+    ✓ should return a list of cars (205ms)
+
+  readCarHandler
+    ✓ should return a list of cars (102ms)
+
+
+  2 passing (325ms)
+````
+
+
+## The frontend...
+
+Most of the time, while developing the client, I run it locally but it hits the real remote endpoints.  To do that, I run:
+
+> npm start
+
+within the client directory.  It'll serve on http://localhost:3000/
+
+But to make that work, I needed to enable CORS headers to allow localhost to hit the api endpoints which is not the best idea for production.  
+
+NOTE: this does mean you have to `sls function deploy XXXX` if you make backend changes. 
+
+
+## Deploying...
+
+Deploy the client
+
+> sls client deploy
+
+Deploy all functions & endpoints
+
+> sls function deploy
+> sls endpoint deploy
+
+
+
+-------------------------------------------------------------
 
 
 # Original Docs
@@ -26,7 +106,7 @@ This project is the conglomeration of a couple other projects.
 
 The base client app docs are in client/Readme.md
 
-The base serverless app docs follow:
+The base Serverless Authentication app docs follow:
 
 # Serverless Authentication
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
