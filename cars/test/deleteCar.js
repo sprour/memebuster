@@ -34,7 +34,7 @@ describe('deleteCar', () => {
             car.getCar(carToDelete.id)
                 .then((result) => {
 
-                    assert.isNotOk(result.Item); // should not find the car after it's deleted.
+                    assert.isNotOk(result); // should not find the car after it's deleted.
                     done();
                 })
                 .catch(done);

@@ -92,7 +92,7 @@ function getCars() {
     };
 
     // TODO: Handle paging
-    return dbscan(params);
+    return dbscan(params).then((result) => result.Items);
 }
 
 exports = module.exports = {

@@ -12,15 +12,18 @@ const assert      = mochaPlugin.chai.assert;
 // }
 
 
+// We'll test the library function and then the lambda function separate in this test...
+
+
 describe('readCar', () => {
     it('should return a list of cars', (done) => {
         car.getCars()
             .catch(done)
             .then((result)=> {
 
-                assert.isAbove(result.Count, 5, "returned at least 6 cars"); // our sample data has 6 cars in it
-                assert.isDefined(result.Items, "items exist");
-                assert.isDefined(result.Items[0].year, "year exists");
+                assert.isAbove(result.length, 5, "returned at least 6 cars"); // our sample data has 6 cars in it
+                assert.isDefined(result, "items exist");
+                assert.isDefined(result[0].year, "year exists");
 
                 done();
             });
@@ -56,8 +59,6 @@ describe('readCarHandler', () => {
             done();
         });
     });
-
-
 });
 
 
