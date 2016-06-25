@@ -1,7 +1,10 @@
 'use strict';
 
-module.exports.handler = function(event, context, cb) {
-  return cb(null, {
-    message: 'Go Serverless! Your Lambda function executed successfully!'
-  });
-};
+
+const car = require('../lib/car');
+
+module.exports.handler =
+    (event, context, callback) =>
+        car.updateCar(event.id, event.make, event.year, event.mileage)
+            .then((result) => callback(null, result))
+            .catch(callback);

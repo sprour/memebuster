@@ -9,9 +9,9 @@ I'd be happy to hear about ways of improving this, drop me an email or open an i
 
 # Features
 
-Login via Facebook or Google (you could set up MS too)
-Saves a simple user profile from your login provider in DynamoDb
-Sample REST methods to show how to manipulate a DynamoDb table
+* Login via Facebook or Google (you could set up MS too) (authentication/)
+* Saves a simple user profile from your login provider in DynamoDb (authentication/)
+* Sample REST methods to show how to manipulate a DynamoDb table (in cars/)
 
 # Serverless Plugins
 
@@ -22,6 +22,10 @@ I've included the following plugins
 * serverless-optimizer-plugin - Reduces the size of your lambda functions for faster deploys and startup times
 * serverless-mocha-plugin - Run mocha tests on your functions
 * serverless-dynamodb-fixtures-plugin - Load static data into your dynamodb for testing
+
+
+I've been developing against the live dynamoddb and not the local version, that's one piece I plan on looking into in the future.
+
 
 # Setup
 
@@ -93,6 +97,7 @@ Deploy the client
 Deploy all functions & endpoints
 
 > sls function deploy
+
 > sls endpoint deploy
 
 

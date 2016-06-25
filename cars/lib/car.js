@@ -13,10 +13,21 @@ const uuid          = require('uuid');
 const dbget = Promise.promisify(dynamodb.get.bind(dynamodb));
 const dbscan = Promise.promisify(dynamodb.scan.bind(dynamodb));
 const dbput = Promise.promisify(dynamodb.put.bind(dynamodb));
+const dbupdate = Promise.promisify(dynamodb.update.bind(dynamodb));
+const dbdelete = Promise.promisify(dynamodb.delete.bind(dynamodb));
 
+function deleteCar(id) {
+    var params = {
+        TableName: table,
+        Key:{
+            "id":id
+        }
+    };
+    return dbdelete(params);
+}
 
 function createCar(make, year, mileage) {
-    let id = uuid.v4();
+    let id = uuid.v4(); // TODO - need to investigate to see if this it the best way to generate id's
 
     if(!make){
         return Promise.reject('No make specified');
@@ -38,38 +49,41 @@ function createCar(make, year, mileage) {
 }
 
 
-function updateCar(id, make, year, mileage, callback) {
+function updateCar(id, make, year, mileage) {
+    var attributesToChange = {};
+    var valuesToSet = {};
+    var setExpressions = [];
+
+    if(make) {
+        attributesToChange["#make"] = "make";
+        valuesToSet[":make"] = make;
+        setExpressions.push("#make = :make")
+    }
+    if(year) {
+        attributesToChange["#year"] = "year";
+        valuesToSet[":year"] = year;
+        setExpressions.push("#year = :year");
+    }
+    if(mileage) {
+        attributesToChange["#mileage"] = "mileage";
+        valuesToSet[":mileage"] = mileage;
+        setExpressions.push("#mileage = :mileage");
+
+    }
 
     const params = {
         TableName: table,
         Key: { id : id },
-        UpdateExpression: 'set #make = :make, #mileage = :mileage, #year = :year',
-        ExpressionAttributeNames: {
-            "#make": "make",
-            "#year": "year",
-            "#mileage": "mileage"
-        },
-        ExpressionAttributeValues: {
-            ":make": make,
-            ":year": year,
-            ":mileage": mileage
-        }
+        UpdateExpression: 'set ' + setExpressions.join(","),
+        ExpressionAttributeNames: attributesToChange,
+        ExpressionAttributeValues: valuesToSet
     };
 
-    dynamodb.update(params, (error, data) => {
-        if(error) {
-            console.log(error, error.stack);
-            callback(error);
-        } else {
-            callback(null);
-        }
-    });
+    return dbupdate(params);
 }
 
 function getCar(id) {
-
-
-    return dbget({TableName:table, Key:{id:id}});
+    return dbget({TableName:table, Key:{id:id}}).then((result) => result.Item);
 }
 
 function getCars() {
@@ -77,11 +91,14 @@ function getCars() {
         TableName: table
     };
 
+    // TODO: Handle paging
     return dbscan(params);
 }
 
 exports = module.exports = {
     updateCar: updateCar,
     getCars: getCars,
-    createCar: createCar
+    createCar: createCar,
+    getCar: getCar,
+    deleteCar: deleteCar
 };
